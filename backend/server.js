@@ -19,10 +19,13 @@ app.get("/", (req, res) => {
 
 // MongoDB Connection
 mongoose
-  .connect("mongodb://127.0.0.1:27017/signupFormDB", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://vp564141:h4qT5DhEbayT1gE5@signuppage.en9tg.mongodb.net/",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.error("Database connection error:", err));
 
