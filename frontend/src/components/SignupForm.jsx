@@ -29,7 +29,7 @@ const SignupForm = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/signup",
+        "http://signup-page-connect-with-db-44f3.vercel.app",
         formData
       );
       alert(response.data.message);
