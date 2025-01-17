@@ -4,18 +4,12 @@ const cors = require("cors");
 const authRoutes = require("./routes/auth");
 
 const app = express();
-
-// Middleware
 app.use(cors());
 app.use(express.json());
-
-// Routes
 app.use("/api/auth", authRoutes);
 
-// Root Route (Replace or Add This Code)
-app.get("/", (req, res) => {
-  res.send("Welcome to the Signup API!");
-});
+// Root Route
+app.get("/", (req, res) => res.send("Welcome to the Signup & Login API"));
 
 // MongoDB Connection
 mongoose

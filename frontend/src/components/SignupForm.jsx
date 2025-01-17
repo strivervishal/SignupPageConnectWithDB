@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const SignupForm = () => {
@@ -146,13 +147,21 @@ const SignupForm = () => {
         <p className="text-xs text-center text-gray-500">
           By clicking the Sign Up button, you agree to our{" "}
           <a href="#" className="text-blue-500 underline">
-            Terms and Condition
+            Terms and Conditions
           </a>{" "}
           and{" "}
           <a href="#" className="text-blue-500 underline">
-            Policy Privacy
+            Privacy Policy
           </a>
           .
+        </p>
+
+        {/* Sign In Link */}
+        <p className="text-sm text-center">
+          Already have an account?{" "}
+          <Link to="/signin" className="text-blue-500 underline">
+            Sign In
+          </Link>
         </p>
       </form>
     </div>
