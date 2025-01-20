@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const WelcomePage = () => {
   const [userData, setUserData] = useState({});
@@ -33,6 +34,11 @@ const WelcomePage = () => {
         Welcome, {userData.name || "User"}! 🎉
       </h1>
       <p>Email: {userData.email}</p>
+      <br />
+
+      <Link to="/upload" className="text-blue-500 underline">
+        Upload Media
+      </Link>
     </div>
   );
 };

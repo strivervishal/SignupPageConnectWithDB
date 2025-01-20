@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const upload = require("../cloudinary/multer")
 
 // Secret key for JWT (instead of using .env)
 const JWT_SECRET = "your_jwt_secret_key";
@@ -68,6 +69,17 @@ router.get("/welcome", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(401).json({ message: "Invalid token" });
+  }
+});
+
+// media upload Route
+router.post("/upload", upload.single("media"), async (req, res) => {
+  try {
+    const fileUrl = req.file.path; // File URL from Cloudinary
+    res.status(200).json({ success: true, fileUrl });
+  } catch (error) {
+    console.error("Media upload error:", error);
+    res.status(500).json({ success: false, message: "Media upload failed" });
   }
 });
 
