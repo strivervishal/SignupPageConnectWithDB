@@ -18,18 +18,19 @@ const MediaUpload = () => {
     }
 
     const formData = new FormData();
-    formData.append("media", file);
+    formData.append("media", file); // Append the file to the form data
 
     setUploading(true);
     try {
+      // Use your local or production backend URL
       const response = await axios.post(
-        "https://signup-page-connect-with-db-44f3.vercel.app/api/auth/upload",
+        "https://signup-page-connect-with-db-44f3.vercel.app/api/auth/upload", // Change to your local or deployed URL
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-      setFileUrl(response.data.fileUrl);
+      setFileUrl(response.data.fileUrl); // Set the uploaded file URL
       alert("File uploaded successfully!");
     } catch (error) {
       console.error("Upload error:", error);
