@@ -24,7 +24,7 @@ const MediaUpload = () => {
     try {
       // Use your local or production backend URL
       const response = await axios.post(
-        "http://localhost:5000/api/auth/upload", // Change to your local or deployed URL
+        "https://signup-page-connect-with-db-44f3.vercel.app/api/auth/upload", // Change to your local or deployed URL
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  photo: {
+    type: String, // This will store the path or URL of the uploaded photo
+    required: false, // Make it optional if you don't want to enforce it during registration
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);

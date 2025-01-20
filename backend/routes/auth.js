@@ -3,10 +3,24 @@ const router = express.Router();
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const upload = require("../cloudinary/multer")
+const multer = require("multer");
+const cloudinary = require("../config/cloudinary");
+const fs = require("fs");
 
-// Secret key for JWT (instead of using .env)
+// Secret key for JWT (use .env in production)
 const JWT_SECRET = "your_jwt_secret_key";
+
+// Configure Multer for temporary local storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/"); // Temporary storage folder
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const upload = multer({ storage });
 
 // Sign Up Route
 router.post("/signup", async (req, res) => {
@@ -72,14 +86,25 @@ router.get("/welcome", async (req, res) => {
   }
 });
 
-// media upload Route
+// File Upload Route
 router.post("/upload", upload.single("media"), async (req, res) => {
   try {
-    const fileUrl = req.file.path; // File URL from Cloudinary
-    res.status(200).json({ success: true, fileUrl });
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    // Upload file to Cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: "uploads", // Optional: Cloudinary folder
+    });
+
+    // Delete the local file after upload
+    fs.unlinkSync(req.file.path);
+
+    return res.status(200).json({ fileUrl: result.secure_url });
   } catch (error) {
-    console.error("Media upload error:", error);
-    res.status(500).json({ success: false, message: "Media upload failed" });
+    console.error("Upload Error:", error);
+    return res.status(500).json({ message: "Failed to upload file" });
   }
 });
 
